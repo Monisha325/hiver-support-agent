@@ -1,0 +1,45 @@
+=================================================================
+EVALUATION METRICS REPORT
+Source: golden_set.csv (from twcs.csv only)
+=================================================================
+
+[INTENT CLASSIFICATION]
+  Accuracy:           0.663
+  Macro F1:           0.586
+  Weighted F1:        0.676
+
+  Per-class F1:
+    ACCOUNT_ACCESS                      F1=0.750
+    ORDER_DELIVERY_STATUS               F1=0.725
+    PRODUCT_COMPLAINT                   F1=0.722
+    CHARGE_PAYMENT_BILLING              F1=0.657
+    ORDER_CANCELLATION                  F1=0.571
+    DEVICE_APP_TECHNICAL                F1=0.500
+    PRIME_SUBSCRIPTION                  F1=0.476
+    RETURN_REFUND_REPLACEMENT           F1=0.286
+
+  Worst 3 intents by F1:
+    RETURN_REFUND_REPLACEMENT           F1=0.286
+    PRIME_SUBSCRIPTION                  F1=0.476
+    DEVICE_APP_TECHNICAL                F1=0.500
+
+[ESCALATION (escalate = positive class)]
+  Precision:          0.673
+  Recall:             0.740
+  F1:                 0.705
+  TP=37  FP=18  FN=13  TN=130
+  FALSE-AUTO-HANDLE (missed escalations):  13  ← HIGH RISK
+  FALSE-ESCALATE (unnecessary routing):    18
+
+  False-auto examples (gold=escalate, pred=auto):
+    [MSG_0022] @AmazonHelp Things have been going good except for this order placed in Feb, 17 
+    [MSG_0034] @AmazonHelp I'VE SPOKE TO THREE DIFFERENT PEOPLE ABOUT MY REFUND AND IT IS STILL
+    [MSG_0035] @118919 poor service and i complaint regarding my 10.or g display damaged in 6 d
+
+[REPLY GROUNDEDNESS]
+  Mean ROUGE-1 recall vs retrieved passages: 1.000
+  (1.0 = every draft word is in a retrieved AmazonHelp reply)
+  (0.0 = draft shares no words with retrievals)
+  N scored: 198
+
+NOTE: Groundedness proxy only. See llm_judge.py for rubric-based quality.

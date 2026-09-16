@@ -22,39 +22,55 @@ All data, intents, retrieval corpus, and golden-set examples derive exclusively 
 
 ## 2. Results vs. Baselines
 
-> Numbers below are from `eval/metrics_report.txt` and `eval/baselines_report.txt`.  
-> Reproduce with: `python eval/metrics.py && python eval/baselines.py`
+> All numbers from `eval/metrics_report.txt` and `eval/baselines_report.txt`.
+> Reproduce: `python eval/baselines.py` (no key) or `python run_pipeline.py` (with key).
 
-### Intent Classification
+### Intent Classification (N=193, OOS excluded)
 
 | System | Accuracy | Macro F1 | Weighted F1 |
 |--------|----------|----------|-------------|
-| **Agent (GPT-4o-mini + retrieval)** | *see metrics_report.txt* | *see metrics_report.txt* | *see metrics_report.txt* |
-| Baseline 2 — Keyword seed classifier | *see baselines_report.txt* | *see baselines_report.txt* | *see baselines_report.txt* |
-| Baseline 1 — Majority class (always ORDER_DELIVERY_STATUS) | *see baselines_report.txt* | *see baselines_report.txt* | *see baselines_report.txt* |
+| Baseline 1 — Majority class (ORDER_DELIVERY_STATUS) | 0.508 | 0.084 | 0.342 |
+| Baseline 2 — Keyword seed classifier | 0.663 | 0.586 | 0.676 |
+| **Baseline 3 — Retrieval-only** (keyword classify + top retrieved reply) | **0.663** | **0.586** | **0.676** |
+| Agent (GPT-4o-mini + retrieval) | *run `python run_pipeline.py` with API key* | — | — |
 
-> **Note:** The actual numbers populate after running `python run_pipeline.py` with a valid API key. The table placeholders are intentional — fabricating numbers violates the grading philosophy.
+Baseline 3 = Baseline 2 on intent classification (same keyword classifier), but retrieves real AmazonHelp replies as the draft instead of generating one — establishing the retrieval quality floor.
 
-### Escalation (asymmetric)
+**Per-class F1 (Baseline 3 / retrieval-only):**
 
-| System | Precision | Recall | False-Auto ↑ risk | False-Escalate |
-|--------|-----------|--------|-------------------|----------------|
-| Agent | — | — | — | — |
-| Baseline 2 | — | — | — | — |
-| Baseline 1 | 0.000 | 0.000 | = all escalations missed | 0 |
+| Intent | F1 |
+|--------|-----|
+| ACCOUNT_ACCESS | 0.750 |
+| ORDER_DELIVERY_STATUS | 0.725 |
+| PRODUCT_COMPLAINT | 0.722 |
+| CHARGE_PAYMENT_BILLING | 0.657 |
+| ORDER_CANCELLATION | 0.571 |
+| DEVICE_APP_TECHNICAL | 0.500 |
+| PRIME_SUBSCRIPTION | 0.476 |
+| RETURN_REFUND_REPLACEMENT | **0.286** ← worst |
 
-Baseline 1 misses **every** escalation (always predicts auto) — this is the critical lower bound.
+### Escalation (escalate = positive class, asymmetric)
 
-### Reply Quality (LLM-as-judge, 0–12 scale)
+| System | Precision | Recall | False-Auto ↑risk | False-Escalate |
+|--------|-----------|--------|-----------------|----------------|
+| Baseline 1 — Majority | 0.000 | 0.000 | **45** | 0 |
+| Baseline 2 — Keyword | 0.702 | 0.733 | 12 | 14 |
+| **Baseline 3 — Retrieval-only** | **0.673** | **0.740** | **13** | **18** |
+| Agent (LLM) | *pending* | *pending* | *pending* | *pending* |
 
-| Dimension | Agent score |
-|-----------|------------|
-| Groundedness | *from judge_results.json* |
-| Accuracy     | *from judge_results.json* |
-| Helpfulness  | *from judge_results.json* |
-| Tone         | *from judge_results.json* |
+False-auto-handle = missed escalations (HIGH RISK). Agent target: recall > 0.740 with false-auto < 13.
 
-Rubric: `eval/judge_rubric.txt`. Agreement metric: linear-weighted Cohen's kappa, N=20 (see `eval/agreement_report.txt`).
+### Reply Groundedness (ROUGE-1 recall vs retrieved passages)
+
+| System | Mean ROUGE-1 recall |
+|--------|-------------------|
+| Baseline 3 — Retrieval-only | **1.000** (draft IS retrieved reply — theoretical ceiling) |
+| Agent (LLM) | *pending — expected 0.3–0.7 as LLM paraphrases* |
+
+### Reply Quality — LLM-as-judge (0–12)
+
+Judge rubric: groundedness / accuracy / helpfulness / tone (0–3 each).
+Run `python eval/llm_judge.py` after setting API key → writes `eval/judge_results.json`.
 
 ---
 
