@@ -1,26 +1,24 @@
-# Core data & ML
-pandas==2.2.3
-numpy==1.26.4
-scikit-learn==1.5.2
-tqdm==4.66.5
+# Core ML / retrieval
+faiss-cpu==1.15.0
+sentence-transformers==6.0.1
+transformers==5.17.0
+torch==2.12.0
+scikit-learn==1.9.0
+numpy==2.4.6
+scipy==1.17.1
 
-# Dataset download
-kaggle==1.6.17
+# Data
+pandas==3.0.3
 
-# Vector / retrieval (lightweight; no heavy ML framework)
-sentence-transformers==3.1.1
-faiss-cpu==1.9.0
+# LLM backends
+openai==3.14.1
+# google-generativeai>=0.5.0   # uncomment to use Gemini instead
 
-# LLM calls
-openai==1.54.5
-tiktoken==0.8.0
-tenacity==9.0.0           # retry with backoff for API calls
+# Reliability / retries
+tenacity==9.1.4
 
-# Env management
+# Environment
 python-dotenv==1.0.1
 
-# Evaluation & stats
-scipy==1.14.1
-
-# Report / output
-tabulate==0.9.0
+# Kaggle download
+kaggle==2.2.4

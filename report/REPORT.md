@@ -79,26 +79,33 @@ Run `python eval/llm_judge.py` after setting API key → writes `eval/judge_resu
 All examples are real messages from `twcs.csv`.
 
 **Failure 1 — Intent confusion: ORDER_DELIVERY vs RETURN_REFUND**  
-*Example:* `"@AmazonHelp My package arrived damaged — where do I get a replacement?"`  
-Both intents apply. Keyword scorer classifies this as ORDER_DELIVERY_STATUS (keyword "where"). The LLM sometimes agrees with the wrong one. *Hypothesis:* Multi-intent messages need a "primary intent" definition; currently undefined.
+**Failure 1 — Refund buried inside delivery complaint → wrong intent, missed escalation** `[MSG_0022]`  
+*Text:* `"@AmazonHelp Things have been going good except for this order placed in Feb, 17 wherein Amazon had lost the package, no refund, no nothing. 'We'd have made the refund, had it been a bit early'..."`  
+Predicted: `ORDER_DELIVERY_STATUS / auto`. Gold: `CHARGE_PAYMENT_BILLING / escalate`.  
+The keyword "order" scored higher than "refund" because the message opens with delivery context. The missing refund (the real issue) was buried mid-sentence. *Hypothesis:* Keyword scoring is positional-blind. A sentence-level classifier would catch "no refund" as the dominant clause.
 
-**Failure 2 — UNCLASSIFIED defaults to wrong intent**  
-*Example:* `"@AmazonHelp This keeps happening after Touch ID scan!"`  
-Score=0 on all seeds → fallback to majority class (ORDER_DELIVERY_STATUS). Correct is DEVICE_APP_TECHNICAL. *Hypothesis:* The DEVICE seed keywords don't include "touch id", "scan", "fingerprint". Seed expansion needed.
+**Failure 2 — CANCEL + REFUND confused; wrong escalation path** `[MSG_0034]`  
+*Text:* `"@AmazonHelp I'VE SPOKE TO THREE DIFFERENT PEOPLE ABOUT MY REFUND AND IT IS STILL NOT THERE AFTER A MONTH. DO SOMETHING!!!!!"`  
+Predicted: `RETURN_REFUND_REPLACEMENT / auto`. Gold: `CHARGE_PAYMENT_BILLING / escalate`.  
+"Refund" seed matched RETURN (auto) before CHARGE (escalate). A chronic multi-contact case got auto-handled instead of escalated. *Hypothesis:* Chronic-contact signal (e.g. "three different people", "after a month") should override intent classification and force escalation.
 
-**Failure 3 — Escalation missed on high-dollar billing**  
-*Example:* `"I wonder if Amazon will reimburse me the overdraft fee..."`  
-The word "reimburse" scores highest for RETURN_REFUND_REPLACEMENT (auto-handle), not CHARGE_PAYMENT_BILLING (escalate). *Hypothesis:* Seed keyword overlap between intents causes wrong classification, which cascades to wrong escalation decision.
+**Failure 3 — Account block hidden behind product complaint** `[MSG_0035]`  
+*Text:* `"poor service and i complaint regarding my 10.or g display damaged in 6 days — they not given replace product they block my no."`  
+Predicted: `RETURN_REFUND_REPLACEMENT / auto`. Gold: `ACCOUNT_ACCESS / escalate`.  
+"Replace" dominated the seed match; "block my no." (blocked phone/account) was ignored. Account blocking requires human verification — this was missed entirely. *Hypothesis:* Seed keywords for ACCOUNT_ACCESS need to include "block" and "blocked number".
 
-**Failure 4 — Non-English messages misrouted**  
-*Example:* `"@AmazonHelp je n'ai reçu aucun sms pour m'avertir !!!!"`  
-No English intent matches → classified as ORDER_DELIVERY_STATUS (majority fallback), auto-handled with an English reply the customer cannot read. *Hypothesis:* Language detection must be added as a pre-step; non-English should escalate or route to a language-appropriate queue.
+**Failure 4 — Colloquial "#fraud" triggers unnecessary escalation** `[MSG_0042]`  
+*Text:* `"@AmazonHelp I paid using my Amex Card; after so much of wait the #FedEx guy tells me it's a cod! #unacceptable #fraud"`  
+Predicted: `CHARGE_PAYMENT_BILLING / escalate`. Gold: `ORDER_DELIVERY_STATUS / auto`.  
+The hashtag `#fraud` matched the escalation trigger keyword, routing to human. The customer used "fraud" colloquially for a COD mix-up that AmazonHelp could have resolved with a tracking link. *Hypothesis:* Hashtag-form keywords should be down-weighted vs. prose-form keywords in the trigger list.
 
-**Failure 5 — Short/vague messages produce low-confidence, poorly grounded replies**  
-*Example:* `"Hey @AmazonHelp I currently have a problem with my package."`  
-Intent classification is essentially random at 20 characters. Retrieved passages are also generic. Draft reply is a rephrasing of "please DM us" — unhelpful. *Hypothesis:* Short messages need a clarification step before classification, not a forced answer.
+**Failure 5 — OOS thank-you tweet handled as live delivery query** `[MSG_0138]`  
+*Text:* `"@AmazonHelp Thank you."`  
+Predicted: `ORDER_DELIVERY_STATUS / auto`. Gold: `OOS / escalate` (continuation, no issue).  
+The fallback to majority class (ORDER_DELIVERY_STATUS) triggered a real retrieved reply: *"Sure thing — we're here to help! Have a great weekend!"* — coincidentally appropriate, but for the wrong reason. *Hypothesis:* Short messages below 5 tokens should be classified as continuation/OOS before intent scoring runs.
 
 ---
+
 
 ## 4. What Is Misleading About My Headline Number?
 
