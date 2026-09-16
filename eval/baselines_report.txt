@@ -1,0 +1,24 @@
+=================================================================
+BASELINES REPORT
+Source: golden_set.csv (derived from twcs.csv only)
+=================================================================
+
+--- Baseline 1 — Majority class (always ORDER_DELIVERY_STATUS / auto) ---
+  N (excl. OOS):        193
+  Intent accuracy:      0.508
+  Intent macro F1:      0.084
+  Intent weighted F1:   0.342
+  Escalation precision: 0.000
+  Escalation recall:    0.000
+  False-auto-handle:    45   ← missed escalations
+  False-escalate:       0   ← unnecessary routing
+
+--- Baseline 2 — Keyword seed classifier (no LLM) ---
+  N (excl. OOS):        193
+  Intent accuracy:      0.663
+  Intent macro F1:      0.586
+  Intent weighted F1:   0.676
+  Escalation precision: 0.702
+  Escalation recall:    0.733
+  False-auto-handle:    12   ← missed escalations
+  False-escalate:       14   ← unnecessary routing

@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env / secrets
+.env
+*.env
+
+# Large data files (not committed)
+data/raw/
+data/raw/twcs.csv
+data/raw/twcs.zip
+
+# Pre-built index (large — commit separately if needed)
+# retrieval/index.faiss   # ~62 MB — include if repo host allows
+# retrieval/corpus.jsonl  # ~30 MB — include if repo host allows
+
+# Intermediate outputs
+intent/amazon_threads.csv
+data/brand_profile.csv
+
+# Cached agent results (reproducible by running the pipeline)
+eval/agent_results.json
+eval/judge_results.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

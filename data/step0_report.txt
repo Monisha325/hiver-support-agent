@@ -1,0 +1,27 @@
+======================================================================
+STEP 0 — BRAND PROFILE REPORT
+Source: Kaggle 'Customer Support on Twitter' (twcs.csv)
+No external sources consulted.
+======================================================================
+
+Rank  Brand                OutboundReplies  ThreadCompl  NoiseFrac  TopicTTR   Score
+--------------------------------------------------------------------------------
+1     unknown_AmazonHelp            42,944        0.997      0.002     0.236   0.900
+2     unknown_AppleSupport          15,694        0.999      0.000     0.206   0.646
+3     unknown_Uber_Support          10,367        0.998      0.000     0.196   0.591
+4     unknown_Walmart                  333        0.997      0.003     0.594   0.588
+5     unknown_askvisa                  217        1.000      0.000     0.543   0.588
+6     unknown_AWSSupport               279        1.000      0.000     0.479   0.572
+7     unknown_HiltonHelp               200        1.000      0.000     0.480   0.572
+8     unknown_DunkinDonuts             256        1.000      0.012     0.549   0.570
+9     unknown_askpanera                321        1.000      0.000     0.457   0.567
+10    unknown_KFC_UKI_Help             420        1.000      0.002     0.451   0.563
+
+Column definitions:
+  OutboundReplies  — # tweets sent by brand (proxy for dataset volume)
+  ThreadCompl      — fraction of brand replies that link to an inbound tweet
+  NoiseFrac        — fraction of brand replies ≤ 20 chars (noise proxy)
+  TopicTTR         — type-token ratio of linked inbound texts (topic breadth)
+  Score            — weighted composite (see code comments)
+
+RECOMMENDATION: see Step 0 sign-off in DECISION_LOG.md (populated after sign-off).

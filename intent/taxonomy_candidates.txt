@@ -1,0 +1,92 @@
+======================================================================
+PHASE 1 — INTENT TAXONOMY CANDIDATES
+Brand: AmazonHelp | Source: twcs.csv ONLY
+Banking77 referenced only for shape (count/granularity), NOT for labels
+======================================================================
+
+Working corpus: 50,000 inbound AmazonHelp tweets
+
+CANDIDATE INTENTS (frequency + real examples from data):
+----------------------------------------------------------------------
+
+INTENT: ORDER_DELIVERY_STATUS
+  Count: 15,893  (31.8% of corpus)
+  Real examples (from twcs.csv):
+    - @115850 im not satisfy with your pooor service. service so late delivery im not tracking where is my shipment i was ordered 15 days ago and already paid amount.
+im checking on your website delivery ex
+    - @AmazonHelp On the way, but it may be late
+From UPS at 10AM today.
+A carrier delay has occurred
+Your package can still arrive today by 8PM.
+We're working to get your package back on track. Please chec
+    - @AmazonHelp No they say "Delivery Delay: Your Amazon package..is still on its way, but will arrive later than expected. And tracking info says the same
+
+INTENT: ACCOUNT_LOGIN_ACCESS
+  Count: 2,425  (4.8% of corpus)
+  Real examples (from twcs.csv):
+    - @AmazonHelp Over 24 hours on - still no customer svcs contact or access to account. Password reset codes still not coming through to registered email.
+    - @AmazonHelp No, only an email with following info (see screenshot).
+If I now change my password I'm still unable to login... He keeps giving the message wrong password.
+I think my account is somehow b
+    - @115821 @115850 Tried to change email id on my profile. Got email that account has been blocked. Can’t access account. Please help! No way to reach customer care center cant login! #Amazon
+
+INTENT: GENERAL_INQUIRY_OTHER
+  Count: 2,419  (4.8% of corpus)
+  Real examples (from twcs.csv):
+    - @115850 will you please deliver the product on time? No information on delivery since morning...can you help?
+    - This keeps happening after Touch ID scan! Can you help me please @115850 https://t.co/5mzV6nXSYK
+    - @115821 Can you please give me a # I can call???? Need help with an order, you do not have a live chat or number to call for help?????? thank you
+
+INTENT: RETURN_REFUND_REPLACEMENT
+  Count: 2,281  (4.6% of corpus)
+  Real examples (from twcs.csv):
+    - Got a couple damaged boxes of products that I collect, which option do I choose under return to get replacements instead of refunds for the products? @AmazonHelp https://t.co/hacdoLCtHK
+    - @AmazonHelp Yes, they sent me a return label after they said they were unable to process a replacement and I said I wasn't comfortable sending a broken ceramic through the post in case someone was inj
+    - @115850 @40827 delivered defective product on orderid 4__credit_card__ ,ordrd replacement, but bluedirt not picking up my return and also not recieving calls.. Pathetic replacement service by amazon
+
+INTENT: PRIME_SUBSCRIPTION
+  Count: 1,605  (3.2% of corpus)
+  Real examples (from twcs.csv):
+    - @AmazonHelp I went to cancel my Amazon Prime membership as my free trial has expired &amp; was offered another 30 days free. Will this commit me to an annual membership or can I cancel again after the
+    - so I just realized the student prime membership on amazon ended and I was charged 108$ two months ago... and I just noticed... sad day lol
+    - @AmazonHelp I contacted customer care and I ask them about prime benefits they clearly said prime membership get fast delivery 1 day or 2
+
+INTENT: CHARGE_PAYMENT_BILLING
+  Count: 1,449  (2.9% of corpus)
+  Real examples (from twcs.csv):
+    - I wonder if Amazon will reimburse me the overdraft fee I acquired after my subscribe and save item was charged to a card I didn't choose. 😑
+    - @115850 should introduce postpaid bill payment on amazonpay. Not only prepaid recharge. #PostpaidOnAmazonPay
+    - @115850  Can your customer care team reach me now??? during your sale on no cost EMI conversion you have charged my card for more amount then product price. My number is 9686911186. Thanks
+
+INTENT: PRODUCT_QUALITY_COMPLAINT
+  Count: 946  (1.9% of corpus)
+  Real examples (from twcs.csv):
+    - @AmazonHelp @115850 Glad to hear u had a great Diwali sale. Would be better if u focused on quality rather than quantity. So disappointed
+    - @115821 Very disappointed in Amazon package just received.  Book inside, edges bent, back dented.... how do you give poor quality for Christmas?
+    - @129773 the sound quality on LOTR Two Towers Extended Edition is awful. It’s forcing extreme surround and is distant. Disappointed :(
+
+INTENT: ORDER_CANCELLATION
+  Count: 583  (1.2% of corpus)
+  Real examples (from twcs.csv):
+    - @AmazonHelp I asked to cancel Order 403-4701548-3785169 on 3/11/2017 @ 2:56PM ...But has not been cancelled yet..Look into the matter
+    - @AmazonHelp Update: Amazon rep promised cancellation if order and £5. Order not cancelled, book dispatched. No credit on account.... https://t.co/VEDulJFtMP
+    - @115850 I'd asked customer care to cancel order 404-5150964-5784321. It's still not cancelled and my number is blocked to receive call backs! Why?
+
+INTENT: SELLER_THIRD_PARTY
+  Count: 280  (0.6% of corpus)
+  Real examples (from twcs.csv):
+    - @AmazonHelp FOURTH: @115830 doesn't inform the customers if their order is FBA or Merchant fulfilled items. I contacted the seller to find out this.
+    - @AmazonHelp Yes, it was a third party seller, but Fulfilled by Amazon. If nothing else, I'd expect a credit for the printing I'm having to do today due to the wrong item being shipped.
+    - @AmazonHelp No, they're all shipped and sold by Amazon Canada, hence my frustration. I don't expect 2-day shipping with third party sellers. They have nothing to do with the Prime/shipping agreement, 
+
+INTENT: DELIVERY_ADDRESS_CHANGE
+  Count: 179  (0.4% of corpus)
+  Real examples (from twcs.csv):
+    - Is there anyway that I can change my delivery address as I ordered a parcel today to come tomorrow however I put the wrong address in @AmazonHelp
+    - @AmazonHelp my sister told me i selected the wrong address when usin her acct 2 order bulbs for my riding mower but idk how it went through
+    - And once again Amazon Logistics screwed up a delivery! Right apartment number, wrong address. Good grief!
+
+UNCLASSIFIED (score=0 on all seeds): 21,940 (43.9%)
+
+NOTE: 'UNCLASSIFIED' candidates will be inspected to either fold into
+  existing intents or promote to new intents before finalising taxonomy.
