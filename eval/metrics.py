@@ -263,7 +263,12 @@ if __name__ == "__main__":
     else:
         # Check API key before attempting agent run
         import os
-        has_key = bool(os.environ.get("OPENAI_API_KEY") or os.environ.get("GEMINI_API_KEY"))
+        try:
+            from dotenv import load_dotenv
+            load_dotenv(ROOT / ".env")
+        except ImportError:
+            pass
+        has_key = bool(os.environ.get("OPENAI_API_KEY") or os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY"))
         if not has_key:
             print("[WARN] No LLM API key found and no cached results exist.")
             print("       Add OPENAI_API_KEY or GEMINI_API_KEY to .env, then re-run.")
@@ -283,7 +288,7 @@ if __name__ == "__main__":
     ground_m = groundedness_metric(results)
 
     report_str = format_report(intent_m, esc_m, ground_m, results)
-    print("\n" + report_str)
+    print("\n" + report_str.encode("cp1252", errors="replace").decode("cp1252"))
 
     REPORT_TXT.write_text(report_str, encoding="utf-8")
     print(f"\n[INFO] Report saved -> {REPORT_TXT}")

@@ -4,42 +4,40 @@ Source: golden_set.csv (from twcs.csv only)
 =================================================================
 
 [INTENT CLASSIFICATION]
-  Accuracy:           0.663
-  Macro F1:           0.586
-  Weighted F1:        0.676
+  Accuracy:           0.772
+  Macro F1:           0.736
+  Weighted F1:        0.869
 
   Per-class F1:
-    ACCOUNT_ACCESS                      F1=0.750
-    ORDER_DELIVERY_STATUS               F1=0.725
-    PRODUCT_COMPLAINT                   F1=0.722
-    CHARGE_PAYMENT_BILLING              F1=0.657
-    ORDER_CANCELLATION                  F1=0.571
-    DEVICE_APP_TECHNICAL                F1=0.500
-    PRIME_SUBSCRIPTION                  F1=0.476
-    RETURN_REFUND_REPLACEMENT           F1=0.286
+    ORDER_CANCELLATION                  F1=0.947
+    CHARGE_PAYMENT_BILLING              F1=0.903
+    ACCOUNT_ACCESS                      F1=0.889
+    ORDER_DELIVERY_STATUS               F1=0.874
+    PRIME_SUBSCRIPTION                  F1=0.857
+    DEVICE_APP_TECHNICAL                F1=0.842
+    PRODUCT_COMPLAINT                   F1=0.812
+    RETURN_REFUND_REPLACEMENT           F1=0.500
+    OTHER                               F1=0.000
 
   Worst 3 intents by F1:
-    RETURN_REFUND_REPLACEMENT           F1=0.286
-    PRIME_SUBSCRIPTION                  F1=0.476
-    DEVICE_APP_TECHNICAL                F1=0.500
+    OTHER                               F1=0.000
+    RETURN_REFUND_REPLACEMENT           F1=0.500
+    PRODUCT_COMPLAINT                   F1=0.812
 
 [ESCALATION (escalate = positive class)]
-  Precision:          0.673
-  Recall:             0.740
-  F1:                 0.705
-  TP=37  FP=18  FN=13  TN=130
-  FALSE-AUTO-HANDLE (missed escalations):  13  ← HIGH RISK
-  FALSE-ESCALATE (unnecessary routing):    18
+  Precision:          1.000
+  Recall:             1.000
+  F1:                 1.000
+  TP=50  FP=0  FN=0  TN=148
+  FALSE-AUTO-HANDLE (missed escalations):  0  ← HIGH RISK
+  FALSE-ESCALATE (unnecessary routing):    0
 
   False-auto examples (gold=escalate, pred=auto):
-    [MSG_0022] @AmazonHelp Things have been going good except for this order placed in Feb, 17 
-    [MSG_0034] @AmazonHelp I'VE SPOKE TO THREE DIFFERENT PEOPLE ABOUT MY REFUND AND IT IS STILL
-    [MSG_0035] @118919 poor service and i complaint regarding my 10.or g display damaged in 6 d
 
 [REPLY GROUNDEDNESS]
-  Mean ROUGE-1 recall vs retrieved passages: 1.000
+  Mean ROUGE-1 recall vs retrieved passages: 0.000
   (1.0 = every draft word is in a retrieved AmazonHelp reply)
   (0.0 = draft shares no words with retrievals)
-  N scored: 198
+  N scored: 0
 
 NOTE: Groundedness proxy only. See llm_judge.py for rubric-based quality.

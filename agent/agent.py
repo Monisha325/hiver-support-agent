@@ -43,12 +43,15 @@ except ImportError:
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GROQ_API_KEY   = os.environ.get("GROQ_API_KEY", "")
 
 # Prefer whichever key is set
 if OPENAI_API_KEY:
     LLM_BACKEND = "openai"
 elif GEMINI_API_KEY:
     LLM_BACKEND = "gemini"
+elif GROQ_API_KEY:
+    LLM_BACKEND = "groq"
 else:
     LLM_BACKEND = None  # will raise at call time
 
@@ -78,6 +81,7 @@ ESCALATION_TRIGGER_KEYWORDS = [
     "identity theft", "stolen", "threatening", "unsafe", "injury",
     "hurt", "hospital", "dead", "dying", "health risk",
     "media", "press", "news", "bbc", "cnn",   # threat of public shaming
+    "block", "blocked", "locked", "hacked",   # account access issues
 ]
 
 
@@ -101,8 +105,9 @@ def decide_escalation(intent: str, customer_text: str, llm_reasoning: str) -> tu
             f"({ESCALATION_NOTES[intent]})"
         )
 
-    # Rule 2: trigger keywords
-    matched_kws = [kw for kw in ESCALATION_TRIGGER_KEYWORDS if kw in text_lower]
+    # Rule 2: trigger keywords (use word boundaries to avoid matching colloquial hashtags like #fraud)
+    import re
+    matched_kws = [kw for kw in ESCALATION_TRIGGER_KEYWORDS if re.search(rf'\b{kw}\b', text_lower)]
     if matched_kws:
         return "escalate", (
             f"Customer message contains high-risk keyword(s): {matched_kws}. "
@@ -139,11 +144,29 @@ def _call_openai(messages: list[dict], model: str = "gpt-4o-mini") -> str:
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10))
 def _call_gemini(prompt: str) -> str:
+    import time
+    time.sleep(4)
     import google.generativeai as genai
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-3.5-flash")
     resp = model.generate_content(prompt)
     return resp.text.strip()
+
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10))
+def _call_groq(messages: list[dict], model: str = "qwen/qwen3.8-27b") -> str:
+    import openai
+    client = openai.OpenAI(
+        api_key=GROQ_API_KEY,
+        base_url="https://api.groq.com/openai/v1",
+    )
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=0.2,
+        max_tokens=600,
+    )
+    return resp.choices[0].message.content.strip()
 
 
 def _call_llm(system: str, user: str) -> str:
@@ -154,9 +177,14 @@ def _call_llm(system: str, user: str) -> str:
         ])
     elif LLM_BACKEND == "gemini":
         return _call_gemini(f"{system}\n\nUser: {user}")
+    elif LLM_BACKEND == "groq":
+        return _call_groq([
+            {"role": "system", "content": system},
+            {"role": "user",   "content": user},
+        ])
     else:
         raise RuntimeError(
-            "No LLM API key set. Add OPENAI_API_KEY or GEMINI_API_KEY to .env"
+            "No LLM API key set. Add OPENAI_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY to .env"
         )
 
 
@@ -179,6 +207,10 @@ def _build_classify_prompt(customer_text: str, hits: list[dict]) -> tuple[str, s
         "You are an intent classifier for Amazon customer support.\n"
         "Classify the customer message into EXACTLY ONE of these intents:\n"
         f"{intent_list}\n\n"
+        "CRITICAL RULES:\n"
+        "1. If a message contains multiple issues (e.g. delivery issue AND a refund request), prioritize the intent that involves payments, refunds, or account access (e.g., CHARGE_PAYMENT_BILLING).\n"
+        "2. If a customer mentions their account or phone number is 'blocked' or 'locked', it is ALWAYS ACCOUNT_ACCESS.\n"
+        "3. Ignore colloquial frustration hashtags like #fraud if the actual issue is just a delayed delivery.\n\n"
         "Output a JSON object with keys: "
         "'intent' (one of the IDs above), 'confidence' (0.0-1.0), "
         "'reasoning' (one sentence explaining why). "
@@ -254,6 +286,10 @@ def run_agent(customer_text: str, top_k: int = 5) -> dict:
     sys_p, usr_p = _build_classify_prompt(customer_text, hits)
     raw_classify  = _call_llm(sys_p, usr_p)
     try:
+        import re
+        match = re.search(r'\{.*\}', raw_classify, re.DOTALL)
+        if match:
+            raw_classify = match.group(0)
         classify_json = json.loads(raw_classify)
         intent     = classify_json.get("intent", "ORDER_DELIVERY_STATUS")
         confidence = float(classify_json.get("confidence", 0.5))

@@ -54,6 +54,7 @@ except ImportError:
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GROQ_API_KEY   = os.environ.get("GROQ_API_KEY", "")
 
 RUBRIC_TEXT = """
 You are an expert customer support quality evaluator.
@@ -134,7 +135,7 @@ Score the AI DRAFT REPLY using the rubric."""
         from tenacity import retry, stop_after_attempt, wait_exponential
 
         genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-3.5-flash")
 
         @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=8))
         def _call():
@@ -142,16 +143,39 @@ Score the AI DRAFT REPLY using the rubric."""
             return resp.text.strip()
         return _call()
 
+    elif GROQ_API_KEY:
+        import openai
+        from tenacity import retry, stop_after_attempt, wait_exponential
+
+        @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=8))
+        def _call():
+            client = openai.OpenAI(
+                api_key=GROQ_API_KEY,
+                base_url="https://api.groq.com/openai/v1",
+            )
+            resp = client.chat.completions.create(
+                model="qwen/qwen3.8-27b",
+                messages=[
+                    {"role": "system", "content": RUBRIC_TEXT},
+                    {"role": "user",   "content": user_msg},
+                ],
+                temperature=0.0,
+                max_tokens=200,
+            )
+            return resp.choices[0].message.content.strip()
+        return _call()
+
     else:
-        raise RuntimeError("No LLM key set. Add OPENAI_API_KEY or GEMINI_API_KEY to .env")
+        raise RuntimeError("No LLM key set. Add OPENAI_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY to .env")
 
 
 def parse_scores(raw):
-    """Parse JSON from judge response, with fallback for markdown-wrapped JSON."""
+    """Parse JSON from judge response, with fallback for markdown-wrapped JSON and regex."""
+    import re
     raw = raw.strip()
-    if raw.startswith("```"):
-        lines = raw.split("\n")
-        raw = "\n".join(lines[1:-1])
+    match = re.search(r'\{.*\}', raw, re.DOTALL)
+    if match:
+        raw = match.group(0)
     return json.loads(raw)
 
 
@@ -195,7 +219,7 @@ if __name__ == "__main__":
                 "overall_comment": f"ERROR: {e}",
                 "raw_response": "",
             })
-        time.sleep(0.3)   # rate-limit buffer
+        time.sleep(4)   # rate-limit buffer
 
     print()
 

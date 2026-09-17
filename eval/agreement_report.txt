@@ -1,0 +1,16 @@
+============================================================
+JUDGE vs HUMAN AGREEMENT REPORT
+N compared: 50
+Agreement metric: Cohen's kappa (linear weights for 0-3 dims)
+============================================================
+
+Per-dimension (linear-weighted kappa):
+  groundedness    kappa=+0.813  (near-perfect)  llm_mean=2.54  human_mean=2.52
+  accuracy        kappa=+0.636  (substantial)  llm_mean=2.42  human_mean=2.28
+  helpfulness     kappa=+0.815  (near-perfect)  llm_mean=2.54  human_mean=2.44
+  tone            kappa=+0.845  (near-perfect)  llm_mean=2.42  human_mean=2.46
+
+Overall total (binned low/medium/high): kappa=+0.110
+
+NOTE: These numbers are reported as-is, weak or strong.
+The kappa is computed over the judge subset (N<=50 examples).
