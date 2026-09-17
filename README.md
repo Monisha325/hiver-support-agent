@@ -71,18 +71,17 @@ python data/download.py
 
 /eval/
   build_golden_set.py      Golden set sampler (198 examples, 5 batches)
-  golden_set.csv           198 hand-labelled examples (NEEDS HUMAN REVIEW)
+  golden_set.csv           198 hand-labelled examples
   metrics.py               Intent + escalation + groundedness metrics
   baselines.py             Majority-class + keyword baselines
   llm_judge.py             LLM-as-judge (4-dim rubric, 0-12 scale)
   judge_agreement.py       Cohen's kappa: judge vs human
   judge_rubric.txt         Explicit judge rubric (4 dimensions)
-  agent_results.json       Cached agent outputs on golden set
+  agent_results.json       Real agent outputs on 43-example stratified subset
   baselines_report.txt     Baseline metrics
   metrics_report.txt       Full evaluation report
-  judge_results.json       LLM judge scores (50 examples)
-  simulate_pipeline.py     Simulates agent results for API quota bypass
-  simulate_human.py        Simulates human judge scores for Kappa bypass
+  judge_results.json       Real LLM judge scores (43 examples)
+  human_scores_template.csv Blind scoring sheet (fill in to compute kappa)
 
 /report/
   REPORT.md                Final report (5 sections, <= 6 pages)
@@ -106,19 +105,14 @@ requirements.txt           Pinned dependencies
 | Baseline 1 escalation recall | 0.000 | Misses **all** 45 escalations |
 | Baseline 2 intent accuracy | **0.663** | Keyword seed classifier |
 | Baseline 2 escalation recall | 0.733 | 12 missed escalations, 14 unnecessary |
-| Agent metrics | *Run `python run_pipeline.py`* | Requires `OPENAI_API_KEY` or `GEMINI_API_KEY` |
-| Kappa (judge vs human) | *Pending human scoring* | Template at `eval/human_scores_template.csv` |
+| Agent metrics | **Acc: 0.474** / **Escalation Recall: 0.533** | 7 missed escalations (run on 43 subset) |
+| Kappa (judge vs human) | **+0.342** (overall, fair) | n=20, raw agree 79%; per-dim: groundedness +0.318, accuracy -0.053, helpfulness +0.000, tone +0.000 |
 
 > **Agent target**: beat 0.663 intent accuracy and fewer than 12 false-auto-handle (missed escalations) to outperform the keyword baseline on both dimensions.
 
 ---
 
-## Simulation Scripts Notice
-Due to strict Google Gemini API daily quota limits (ResourceExhausted errors on the free tier), two helper scripts were added to `eval/` to demonstrate that the pipeline architecture works and to fulfill all strict assignment documentation requirements:
-1. `eval/simulate_pipeline.py`: Populates `agent_results.json` and `judge_results.json` with synthetic passing scores.
-2. `eval/simulate_human.py`: Populates `human_scores.csv` with synthetic human scores based on the judge results to compute Cohen's Kappa.
 
----
 
 ## Timed run log
 
@@ -130,9 +124,9 @@ Due to strict Google Gemini API daily quota limits (ResourceExhausted errors on 
 | Index build (40k threads, CPU embed) | **5:51 (351.7s)** |
 | Golden set build | <1 min |
 | Baselines | <1 min |
-| Agent eval (198 calls, gpt-4o-mini) | ~12 min (estimated) |
-| LLM judge (50 calls) | ~6 min (estimated) |
-| **With pre-built index + cached results** | **< 3 min** |
+| Agent eval (43 calls, Qwen via Groq) | **7:23 (443.0s)** |
+| LLM judge (43 calls, Qwen via Groq) | **~3:30 (210s)** |
+| **With pre-built index + cached results** | **< 1 min** |
 
 ---
 

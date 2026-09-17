@@ -195,7 +195,16 @@ if __name__ == "__main__":
     print(f"[INFO] Judging {len(to_judge)} examples (subset of {len(results)} total)...")
 
     judge_results = []
+    if JUDGE_JSON.exists():
+        with open(JUDGE_JSON, encoding="utf-8") as f:
+            judge_results = json.load(f)
+            
+    processed_ids = {j["message_id"] for j in judge_results}
+    
     for i, r in enumerate(to_judge):
+        if r["message_id"] in processed_ids:
+            continue
+            
         print(f"\r  [{i+1}/{len(to_judge)}] {r['message_id']} ...", end="", flush=True)
         try:
             raw = call_judge(
@@ -212,19 +221,14 @@ if __name__ == "__main__":
             judge_results.append(scores)
         except Exception as e:
             print(f"\n  [WARN] Failed to judge {r['message_id']}: {e}")
-            judge_results.append({
-                "message_id": r["message_id"],
-                "groundedness": -1, "accuracy": -1,
-                "helpfulness": -1, "tone": -1, "total": -1,
-                "overall_comment": f"ERROR: {e}",
-                "raw_response": "",
-            })
+            raise e
+            
+        with open(JUDGE_JSON, "w", encoding="utf-8") as f:
+            json.dump(judge_results, f, indent=2, ensure_ascii=False)
+            
         time.sleep(4)   # rate-limit buffer
 
     print()
-
-    with open(JUDGE_JSON, "w", encoding="utf-8") as f:
-        json.dump(judge_results, f, indent=2, ensure_ascii=False)
     print(f"[INFO] Judge results saved -> {JUDGE_JSON}")
 
     # Print summary

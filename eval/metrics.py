@@ -37,8 +37,17 @@ def run_agent_on_golden(golden_rows: list[dict]) -> list[dict]:
     from agent.agent import run_agent
 
     results = []
+    if RESULTS_JSON.exists():
+        with open(RESULTS_JSON, encoding="utf-8") as f:
+            results = json.load(f)
+            
+    processed_ids = {r["message_id"] for r in results}
+
     total = len(golden_rows)
     for i, row in enumerate(golden_rows):
+        if row["message_id"] in processed_ids:
+            continue
+            
         print(f"\r  Running agent [{i+1}/{total}] ...", end="", flush=True)
         try:
             res = run_agent(row["input_text"])
@@ -56,19 +65,15 @@ def run_agent_on_golden(golden_rows: list[dict]) -> list[dict]:
                 "reference_note":   row.get("reference_resolution_note", ""),
             })
         except Exception as e:
-            results.append({
-                "message_id":    row["message_id"],
-                "gold_intent":   row["gold_intent"],
-                "gold_decision": row["gold_decision"],
-                "pred_intent":   "ERROR",
-                "pred_decision": "ERROR",
-                "pred_reason":   str(e),
-                "draft_reply":   "",
-                "retrieved_hits": [],
-                "confidence":    0.0,
-                "input_text":    row["input_text"],
-                "reference_note": row.get("reference_resolution_note", ""),
-            })
+            print(f"\n[ERROR] API failed on {row['message_id']}: {e}")
+            print("Stopping to allow resume later.")
+            raise e
+            
+        with open(RESULTS_JSON, "w", encoding="utf-8") as f:
+            json.dump(results, f, ensure_ascii=False, indent=2)
+            
+        time.sleep(4) # Rate limit mitigation
+            
     print()
     return results
 
@@ -254,6 +259,17 @@ if __name__ == "__main__":
         print(f"[WARN] Only {len(labelled)} rows have been human-labelled.")
         print("       Running on ALL rows (treating seed labels as gold).")
         labelled = golden_rows
+
+    # REDUCE TO REAL STRATIFIED SUBSET (Step 1 of fix)
+    subset = []
+    counts = collections.defaultdict(int)
+    for r in labelled:
+        intent = r["gold_intent"]
+        if counts[intent] < 5:
+            subset.append(r)
+            counts[intent] += 1
+    labelled = subset
+    print(f"[INFO] Reduced to stratified subset of {len(labelled)} examples.")
 
     # Run agent (or load cached results)
     if RESULTS_JSON.exists():

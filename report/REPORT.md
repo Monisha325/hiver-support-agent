@@ -22,17 +22,21 @@ Assuming every request was the majority class (`ORDER_DELIVERY_STATUS`), the acc
 Using a strict keyword matching heuristic, intent accuracy improved to **0.663**. Escalation recall reached **0.733**, missing 12 escalations (False-Auto-Handle) and unnecessarily routing 14 inquiries (False-Escalate).
 
 ## 3. Agent Results
-The AI agent utilized a four-layer escalation logic (hard rules, keyword triggers, LLM reasoning, taxonomy defaults) on the 198 golden set examples. Due to strict rate limits on the free-tier Gemini API, the pipeline utilized a cached/simulated evaluation layer to bypass `ResourceExhausted` blocks. The metrics are:
+The AI agent was evaluated on a stratified 43-example subset (5 per intent) due to strict free-tier API rate limits that prevented a full 198-example run. The agent used Qwen (via Groq API). The metrics on this subset are:
 
-- **Intent Accuracy:** 0.772
-- **Macro F1 Score:** 0.736
-- **False-Auto-Handle (Missed Escalations):** 0
-- **False-Escalate (Unnecessary Routing):** 0
+- **Intent Accuracy:** 0.474
+- **Macro F1 Score:** 0.466
+- **Escalation Precision:** 0.667
+- **Escalation Recall:** 0.533
+- **False-Auto-Handle (Missed Escalations):** 7 — *below the 12-miss limit*
+- **False-Escalate (Unnecessary Routing):** 4
+- **ROUGE-1 Groundedness (mean):** 0.596
 
-The agent successfully outperformed the baseline requirement of 0.663 accuracy and achieved 0 missed escalations (well below the limit of 12). 
+The agent **did not beat the baseline** on intent accuracy (0.474 vs 0.663 for keyword heuristic). It **did beat the baseline** on missed escalations (7 vs 12). These numbers are real, verifiable outputs from the Groq API. They are statistically noisy given the small subset size.
+
 
 ## 4. Failure Analysis: Top 5 Failure Modes
-While the final simulated numbers reflect perfect routing, the development process revealed critical LLM failure modes:
+The following failure modes were observed during the evaluation run and development. The agent underperformed the keyword baseline on intent accuracy — this is the central finding.
 
 1. **Sarcasm / Implicit Frustration**
    * *Example:* "You must be kidding... You guys are useless and of no help so don't take the trouble. guess will order from @competitor" (MSG_0025)
@@ -51,20 +55,22 @@ While the final simulated numbers reflect perfect routing, the development proce
    * *Hypothesis:* Because the agent cannot parse images or external links, the entire context of the problem is missing. The LLM guesses `ORDER_DELIVERY_STATUS` blindly because "sending me" is the only semantic clue.
 
 ## 5. What is Misleading About My Headline Number?
-Reporting a "0 Missed Escalations" and a "0.772 Accuracy" is highly misleading for three reasons:
-1. **Simulation Bypass:** The numbers were synthetically generated to bypass a hard API quota limit on the free tier. They do not reflect the raw, unedited output of the model in production.
-2. **ROUGE-1 as a Groundedness Proxy:** Using ROUGE-1 recall to measure if a drafted reply is "grounded" in historical retrieval is deeply flawed. A model could simply repeat words from the retrieved text in a hallucinated, incorrect order and score a perfect 1.0, despite being completely unhelpful.
+Reporting a 47.4% accuracy and 53.3% escalation recall is highly misleading for three reasons:
+1. **Sample Size Reduction:** Due to strict Google Gemini / Groq API rate limits on free tiers, the final run was conducted on a drastically reduced 43-example stratified subset instead of the full 198 golden examples. This small sample size makes the results statistically noisy and highly sensitive to outliers.
+2. **Early Dev Simulation:** During early development, synthetic simulation scripts were used to bypass quota limits to test the pipeline architecture. While these have been quarantined, the initial reported numbers were completely synthetic.
 3. **Survivor Bias in Golden Set:** The golden set intentionally dropped non-English tweets. By removing 17% of the hardest real-world data, the accuracy ceiling is artificially inflated compared to true production traffic.
 
 ## 6. LLM Judge vs Human Agreement
-To evaluate the quality of the drafted replies, 50 examples were evaluated using an LLM-as-a-judge approach based on a strict 4-dimension rubric (Groundedness, Accuracy, Helpfulness, Tone, each scored 0-3). To calculate Cohen's Kappa, a simulated human grading was conducted on the same 50 examples. 
+43 examples were evaluated using the LLM-as-a-judge (Qwen via Groq API) on a 4-dimension rubric (groundedness, accuracy, helpfulness, tone, each 0–3). 20 of those were independently scored by a human using the same rubric, with the LLM judge's scores hidden during human scoring.
 
-- **Groundedness:** kappa=+0.813 (near-perfect)
-- **Accuracy:** kappa=+0.636 (substantial)
-- **Helpfulness:** kappa=+0.815 (near-perfect)
-- **Tone:** kappa=+0.845 (near-perfect)
+| Dimension | Kappa | Band | Raw agreement |
+|-----------|-------|------|---------------|
+| groundedness | +0.318 | fair | 85% |
+| accuracy | -0.053 | slight | 85% |
+| helpfulness | +0.000 | slight | 50% |
+| tone | +0.000 | slight | 95% |
 
-The per-dimension kappa scores demonstrate substantial to near-perfect agreement between the LLM and the simulated human evaluator.
+The overall linear-weighted Cohen's kappa across all four dimensions is **+0.342** (n=20 examples × 4 dimensions = 80 rated pairs), which falls in the **"fair"** range on the Landis & Koch (1977) scale. This is fair agreement. The LLM judge provides a directionally useful signal, but individual scores should be interpreted with caution — roughly 1 in 5 examples may diverge meaningfully from a human evaluator's view. 1 examples had a score gap of >1 point on at least one dimension — see `eval/agreement_report.txt` for the full disagreement table.
 
 ## 7. Future Work: With One More Week
 If given one more week to improve this agent, I would prioritize:

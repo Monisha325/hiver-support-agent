@@ -1,3 +1,9 @@
+"""
+DISCLAIMER: This script was used ONLY for early architecture testing when 
+API quota limits were hit. It generates SYNTHETIC/FAKE data and is NOT 
+part of the final, verifiable submission pipeline. It is quarantined here 
+for reference only.
+"""
 import json
 import csv
 import random

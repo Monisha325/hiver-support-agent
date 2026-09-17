@@ -1,16 +1,23 @@
-============================================================
+====================================================================
 JUDGE vs HUMAN AGREEMENT REPORT
-N compared: 50
-Agreement metric: Cohen's kappa (linear weights for 0-3 dims)
-============================================================
+N examples: 20  |  Dimensions: groundedness, accuracy, helpfulness, tone
+Method: linear-weighted Cohen's kappa (Landis & Koch bands)
+====================================================================
 
-Per-dimension (linear-weighted kappa):
-  groundedness    kappa=+0.813  (near-perfect)  llm_mean=2.54  human_mean=2.52
-  accuracy        kappa=+0.636  (substantial)  llm_mean=2.42  human_mean=2.28
-  helpfulness     kappa=+0.815  (near-perfect)  llm_mean=2.54  human_mean=2.44
-  tone            kappa=+0.845  (near-perfect)  llm_mean=2.42  human_mean=2.46
+Dimension          Kappa  Band              Raw Agree   LLM mean  Human mean
+--------------------------------------------------------------------
+groundedness      +0.318  fair                 85.0%       2.85        2.90
+accuracy          -0.053  slight               85.0%       2.95        2.85
+helpfulness       +0.000  slight               50.0%       2.50        2.30
+tone              +0.000  slight               95.0%       3.00        2.95
+--------------------------------------------------------------------
+OVERALL (all dims)   +0.342  fair                 78.8%
+Total (binned)    +0.000
 
-Overall total (binned low/medium/high): kappa=+0.110
+NOTE: Kappa can appear low on n<30 samples even with decent raw agreement.
+      Raw agreement % is provided as a complementary sanity check.
 
-NOTE: These numbers are reported as-is, weak or strong.
-The kappa is computed over the judge subset (N<=50 examples).
+LARGE DISAGREEMENTS (|human - judge| > 1):  1 found
+ID            Dim               Human   Judge   Diff  Customer message
+--------------------------------------------------------------------
+MSG_0037      accuracy              1       3     +2  @115850 Stop behaving like local shopkeepers Amazon. We had good faith in you. C
