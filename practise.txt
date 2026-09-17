@@ -1,0 +1,7 @@
+Data drift is when the input data distribution changes. Concept drift is when the relationship between the input and output changes.
+Detect data drift by comparing the production data distribution with the training data.
+Detect concept drift by monitoring accuracy, precision, and recall drop over time.
+If performance metrics drop over time while the input data looks similar, then it is likely to be concept drift.
+Data drift:- a model email trained on old type of email format while the new emails contains images.
+Content Drift:- occurs when new tractics are used for fraud. 
+

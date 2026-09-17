@@ -1,0 +1,69 @@
+# PrepAI Project Instructions
+
+You are an expert full-stack engineer, UI/UX designer, and AI product architect.
+
+Build a production-ready SaaS application called PrepAI.
+
+## Product Overview
+PrepAI is an AI-powered interview preparation platform that helps users:
+- Generate role-specific interview questions
+- Practice mock interviews
+- Receive AI-based answer evaluation
+- Upload resumes and get ATS analysis
+- Track progress through analytics
+- Get personalized study recommendations
+
+## Tech Stack
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Framer Motion
+- Prisma ORM
+- PostgreSQL
+- Clerk Authentication
+- OpenAI API
+- UploadThing
+- Recharts
+
+## Design Requirements
+- Premium SaaS design inspired by Vercel, Linear, and Notion
+- Responsive across desktop, tablet, and mobile
+- Dark and light mode
+- Smooth animations
+- Accessible components
+- Clean typography and strong visual hierarchy
+
+## Branding
+- Product Name: PrepAI
+- Tagline: Practice Smarter. Interview Better.
+- Primary Color: Indigo
+- Accent Color: Emerald
+
+## Core Features
+1. Authentication
+2. Dashboard
+3. Interview Question Generator
+4. Mock Interview Room
+5. AI Answer Evaluation
+6. Resume ATS Analyzer
+7. Personalized Recommendations
+8. Analytics Dashboard
+
+## Coding Standards
+- Use TypeScript throughout
+- Create modular reusable components
+- Implement loading and error states
+- Follow clean architecture
+- Optimize for performance
+
+## Output Expectations
+- Production-ready code
+- Well-structured folders
+- Clear naming conventions
+- Minimal, purposeful comments
+
+## Workflow
+- Build one feature at a time
+- Use screenshot-based refinement after each page
+- Maintain responsive design and accessibility

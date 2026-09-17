@@ -1,0 +1,10 @@
+DATABASE_URL=postgresql://neondb_owner:npg_QefIOxh17MUX@ep-damp-scene-apcol6h0-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+CLOUDINARY_CLOUD_NAME=deboypxez
+CLOUDINARY_API_KEY=442657665114973
+CLOUDINARY_API_SECRET=<your new secret after regenerating>
+
+ACCESS_SECRET=myverylongrandomsecretforjwt123456789
+REFRESH_SECRET=anotherverylongrandomsecret987654321
+AI_SERVICE_URL=http://localhost:8000
+INTERNAL_TOKEN=internalservicesecrettoken123456
