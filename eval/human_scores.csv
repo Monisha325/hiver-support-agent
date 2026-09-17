@@ -1,0 +1,185 @@
+message_id,customer_message,classified_intent,retrieved_references,draft_reply,escalation_decision,escalation_reason,groundedness,accuracy,helpfulness,tone,total,notes
+MSG_0041,@AmazonHelp Hi guys. Who do I contact for queries on payment / EMI? I've already purchased the product and the EMI is not what was promised.,CHARGE_PAYMENT_BILLING,"@282346 Hi! You can contact us by phone or chat here: https://t.co/O0G0y8LDht
+
+^BA
+---
+@282346 That doesn't sound right! Let us take a look at this. Please provide the requisite details here: https://t.co/beaaDm0muc &amp; we'll assist you. ^SF
+---
+@560497 What makes you say this, Harshit? Could you please elaborate on what went wrong so we could check and help? ^HK
+---
+@442147 Allow our support team to look into this. You can connect with us here: https://t.co/R3EfhzgU8B ^CB.
+---
+@638622 Apologies, Rohan. I’d like to assist you. Please fill this form:  https://t.co/beaaDm0muc and I’ll contact you soon. 1/2 ^NK","I’m sorry to hear the EMI terms don’t match what was promised. Since this involves a dispute over the payment amount, I’m escalating this to a human agent who can review the details and assist you further. Please fill out this form: https://t.co/beaaDm0muc, and our team will contact you soon.",escalate,Escalate if amount > $50 or customer explicitly disputes the charge. Auto-handle only for informational billing queries.,3,3,3,3,12,Uses the exact form link from retrieved replies and correctly escalates a payment dispute with a clear next step.
+MSG_0006,"@AmazonHelp I had a chat with one of the service employees, who redirected the problem to some expert. They said I would receive a mail in 24 hours, 37 hours later I still do not have a reply.",ORDER_DELIVERY_STATUS,"@715859 I am very sorry to hear you have not been updated. Can I ask for you to reach out to us again through the link below please. I am sorry for the inconvenience here.  https://t.co/hApLpMlfHN. 
+
+-Graham M
+---
+@149078 Hi, as soon as your details are looked into by the social media team you'll get an update.
+---
+@761046 Hey, Matt! We have received your information and are looking into it. You will hear from us shortly! Thank you for your patience. ^DY
+---
+@817836 Are you noticing these delays happen with a specific carrier? https://t.co/Y5jpI9gRhE ^MH
+---
+@384156 That's rather strange, Tilak. Sorry for the delay. We'll get in touch with you right away. ^JC",I am very sorry to hear you have not received the update you were expecting. We have received your information and are looking into it; you will hear from us shortly. Thank you for your patience.,auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,"Closely mirrors a retrieved reply and reassures the customer, but offers no new action beyond restating a wait-and-see message."
+MSG_0035,@118919 poor service and i complaint regarding my 10.or g display damaged in 6 days  they not given replace product they block my no. https://t.co/TLKZLZRrd5,RETURN_REFUND_REPLACEMENT,"@384107 I'd like to take a closer look into this, please share your details here: https://t.co/GIJyeYqKE0 . ^AG
+---
+@226633 I'm sorry for the trouble! When was the Kindle purchased? ^MO
+---
+@219448 I'm sorry about this experience. Have you reported it to our support team here: https://t.co/2t6DQoUmNZ? ^GD
+---
+@226493 That's strange! Sorry to know that the replacement you've received was damaged. I've passed on your experience as feedback to the relevant team internally and we'll ensure such instances aren't repeated in the future. 1/2 ^EM
+---
+@191896 letter of service denial from them with the official stamp and provide it to us. We'll then, look into it further. [2/2] ^HA","I am very sorry to hear about the damaged display and the frustration with the replacement process. Since you mentioned your number was blocked, please share your order details here: https://t.co/GIJyeYqKE0 so we can investigate further. A human agent will follow up with you shortly to resolve this issue.",escalate,Customer message contains high-risk keyword(s): ['block']. Routing to human agent.,3,3,3,3,12,"Grounded in the retrieved form link, correctly acknowledges the blocked-number complaint, and escalates with a clear next step."
+MSG_0005,@AmazonHelp @115821 soooo delivery instructions aren’t sent to outside delivery services? Cool. Yay for half a Halloween costume.,ORDER_DELIVERY_STATUS,"@439609 I'm sorry to hear about the trouble, Mikey! We'd like to help. Without giving any personal info, will you tell us more? ^HC
+---
+@399288 I'm sorry to hear of this mix up! Has an updated delivery date been provided to the order: https://t.co/Y5jpI9gRhE? ^RR
+---
+@115846 Sorry about your costume, Mike! Who's the carrier responsible for the delivery? Let's check here: https://t.co/Y5jpI9gRhE ^JZ
+---
+@313939 I'm sorry for the trouble you've experienced with your expected package. Can you please confirm who the carrier is? ^ST
+---
+@219505 Hmm.. Have you checked this out: https://t.co/BefisJ6FQe for ways to add information to your shipping address? ^FR","I'm sorry to hear about the trouble with your costume delivery! To help us check the status and see if any delivery instructions were missed, could you please confirm who the carrier is? You can also review your order details here: https://t.co/Y5jpI9gRhE",auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,Directly reuses the carrier-confirmation approach and link from the retrieved replies; helpful but doesn't address the shipping-instructions question directly.
+MSG_0019,"@AmazonHelp Will today if it doesn't arrive. @9583, I realize it's peak time of year, but 5 days with no update from Mississauga seems a bit excessive. It's a gift for a very important friend and I've had to delay twice. https://t.co/7hZig0hQLA",ORDER_DELIVERY_STATUS,"@224291 Please don't hesitate to contact us for further assistance, Jenn.^PJ
+---
+@215427 So sorry about the delay. We do aim to deliver by the delivery date given at the time the order was placed. ^KM
+---
+@475848 Based on the screenshot, it appears that your delivery may arrive by Nov 8th. Let us know if you don't receive it by then. ^SH
+---
+@186828 We'd like to look into this with you! Please get in touch with us by phone or chat here: https://t.co/JzP7hlRCV9 ^KJ
+---
+@562932 What is the delivery date on the order?^CD","So sorry about the delay, especially since this is a gift for an important friend. Please check your order details for the original delivery date, and if it has not arrived by then, contact us via phone or chat here: https://t.co/JzP7hlRCV9 so we can look into this further with you.",auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,"Combines the delivery-date and phone/chat contact refs well and shows empathy for the gift situation, though it doesn't directly acknowledge the 5-day delay already reported."
+MSG_0034,@AmazonHelp I'VE SPOKE TO THREE DIFFERENT PEOPLE ABOUT MY REFUND AND IT IS STILL NOT THERE AFTER A MONTH. DO SOMETHING!!!!! #wtf #amazon #amazonsucks,RETURN_REFUND_REPLACEMENT,"@740905 Hi, sorry to hear you have not received your refund. Did you receive an email confirming the refund had been requested? ^ES
+---
+@279175 Apologies for the issues with the refund. Please contact our support team here: https://t.co/vlvfJr4nN9 and we will help you with this. ^BS
+---
+@180884 We've sent a correspondence to your registered email ID here: https://t.co/NTkrxpsbHJ. Kindly check and revert. ^PS
+---
+@448076 Please don't provide your order details, we consider it personal info. Our Twitter page is visible to public. ^NR 2/2
+---
+@298113 Sorry for the trouble with your refund. Kindly fill in your details here: https://t.co/GIJyeYqKE0 &amp; I'll look into this. ^SQ","I sincerely apologize for the frustration and delay regarding your refund. Since you have already spoken with multiple representatives, please fill in your details here: https://t.co/GIJyeYqKE0 so we can investigate this further.",auto,Auto-handle if standard policy applies. Escalate if customer reports repeated failed replacement or refund amount disputed.,3,3,2,3,11,"Uses the retrieved refund-details link and acknowledges the repeated contacts, though given three prior failed attempts this arguably warranted escalation rather than another auto reply."
+MSG_0036,@115850 Such bass##d team sitting out at Amazon .two replacement faulty given and hatching eggs since complain raised customer care pathetic .,RETURN_REFUND_REPLACEMENT,"@375441 I'm sorry about that. I’d like to help you, please fill this form: https://t.co/beaaDm0muc and I’ll contact you soon. ^SY
+---
+@206509 I’m sorry about the hassle. Have you shared your details via secure link provided to you earlier? ^SB
+---
+@711152 I understand your concern regarding the replacement of your headphone. All the electronic items purchased on our website will have a return period of 10 days. Post which you have to contact manufacturer for any issue with the item. ^RI
+---
+@163184 Apologies for the trouble. I'd like to look into this, kindly share your details here: https://t.co/beaaDm0muc 1/2 ^EM
+---
+@718704 That's quite a remark, I'd like to help you. Kindly drop in your details 1/2 ^AH","I sincerely apologize for the frustration caused by receiving two faulty replacements. To investigate this issue further and assist you with the next steps, please share your order details via this secure link: https://t.co/beaaDm0muc.",auto,Auto-handle if standard policy applies. Escalate if customer reports repeated failed replacement or refund amount disputed.,3,3,2,3,11,"Grounded in the retrieved secure-link reply; given two failed replacements the escalation trigger arguably should apply, but the reply itself is calm and actionable."
+MSG_0040,@AmazonHelp  SBI 10% Cashback offer is valid for prime membership account if i want to buy MOTO G5 S PLUS?,PRIME_SUBSCRIPTION,"@352295 Yes, it is valid. For more information, you may refer to the link here: https://t.co/qYPGBT9beX. ^PS
+---
+@352295 We've responded to your concern here: https://t.co/A4IZPvEo6i please check. ^KA
+---
+@353740 Yes! There is a cash back offer on using SBI card. Please click on the link for details. https://t.co/3SaY3OV0kS  ^RI
+---
+@484260 Apologies for the delay. Could you please confirm if you've sent the details through the link provided to you earlier? ^MN
+---
+@403846 Please connect with us here: https://t.co/vlvfJr4nN9, our team will reach out to you and assist. ^SA","Yes, the SBI 10% Cashback offer is valid for Prime membership accounts. Please click on the link here for more details: https://t.co/3SaY3OV0kS.",auto,Auto-handle: explain cancellation steps or link to membership page. Escalate if customer reports being charged after cancellation.,3,3,3,3,12,Directly answers the question using the exact confirmation and link found in the retrieved replies.
+MSG_0007,@AmazonHelp Review regarding a product or it's delivery is customers prerogative why Amazon has denied it..can't u understand,PRODUCT_COMPLAINT,"@399901 For posting a review, you may refer to our review guidelines here: https://t.co/NL0u2rPBfv ^SB
+---
+@301713 We will only remove a review if it fails to adhere to our community guidelines. Learn more here: https://t.co/twAX7u1eaw ^JE
+---
+@177530 Apologies for the inconvenience. We'd like to look into it and help you. Kindly fill in your details (1/2)^AP
+---
+@384971 That's quite a comment. Please let us know if you have any concerns for better assistance. ^RS
+---
+@270757 That's quite a remark, Srikant. Apologies. Please elaborate your concern for us to assist you better. ^SV","We apologize for the inconvenience and understand your frustration. Reviews are only removed if they fail to adhere to our community guidelines, which you can review here: https://t.co/twAX7u1eaw. Please let us know if you have any specific concerns so we can assist you better.",auto,Auto-handle with standard return/refund offer. Escalate if customer alleges fraud or health/safety risk.,3,3,2,3,11,"Uses the exact community-guidelines policy line and link from the retrieved replies to give a clear, accurate explanation."
+MSG_0027,"@AmazonHelp Have done that - for the 3rd time. It's passed useful now, I'm going to have to cancel my order and be satisfied that I'll never be able to get into my Amazon account, and not get a new camera until I return home in 3 months.",ACCOUNT_ACCESS,"@523181 The link provided by ^ME will allow our team to look into this ourselves, and forward the issue appropriately. ^WT
+---
+@308429 I understand your concern, Sandeep. Kindly wait till you receive a correspondence from us. Appreciate your understanding. ^HD
+---
+@434861 Hello! Thanks for reaching out. Without revealing any personal and account information, will you give us more details about the issue? ^LH
+---
+@792649 I'm sorry for the delay, Jordan. Please let us know if the order doesn't ship in the next day or two. ^VF
+---
+@694859 Hi, Yazen!  I am sorry for the issue with your camera.  We'd love to help!  Can you provide some details for us?  Was it not delivered at all, or was it delivered but you can't locate it?  ^SP","I understand how frustrating it is to be locked out of your account, especially when you are away from home. Since account access issues require specific identity verification that cannot be safely automated, I am escalating this to a human agent who will follow up with you directly. Please wait for their correspondence so we can help you regain access and resolve your camera order.",escalate,Intent 'ACCOUNT_ACCESS' always requires human agent — identity verification cannot be safely automated. (Always escalate: account security issues require identity verification that a bot cannot safely perform.),2,3,3,3,11,"Correctly follows the always-escalate policy and echoes the 'wait for correspondence' language from a retrieved reply, though it doesn't reuse a specific link or form."
+MSG_0039,"@116090 Where is Amazon Household in Canada (sharing of Prime benefits)? In this Christmas season, I guess we'll have to shop off Amazon not to spoil gifts...",PRIME_SUBSCRIPTION,"@795374 Great question! Currently, we do not have a Prime Household option in Canada.  ^AR
+---
+@339585 Apologies for the delay in delivery. Have you tried reporting this to our support team here: https://t.co/2t6DQoUmNZ ? ^AB
+---
+@404789 When you spoke with us regarding your order, what insight did we provide? ^TK
+---
+@255537 Have you contacted us directly to see how we can help? Just click on the link: https://t.co/3pBuw1SV0L ^BD
+---
+@194834 HO HO HO Now you know!!! ^DJ","I understand the disappointment, especially during the holiday season. Currently, we do not have a Prime Household option available in Canada, so sharing Prime benefits with family members isn't possible at this time.",auto,Auto-handle: explain cancellation steps or link to membership page. Escalate if customer reports being charged after cancellation.,3,3,2,3,11,Directly reuses the accurate 'no Prime Household in Canada' fact from the retrieved reply but offers no alternative or link for further info.
+MSG_0022,"@AmazonHelp Things have been going good except for this order placed in Feb, 17 wherein Amazon had lost the package, no refund, no nothing. ""We'd have made the refund, had it been a bit early"", replied Amazon CSE. The question is, where did the money go!?",RETURN_REFUND_REPLACEMENT,"@822773 This doesn't seem to be right. I'd like to have a closer look at the refund issue, please share your details in this link here: https://t.co/GIJyeYqKE0 and I'll reach out to you. ^KA
+---
+@563036 I understand your concern is regarding the refund. Kindly reach out to us here: https://t.co/vlvfJr4nN9 &amp; we'll help you. ^AH
+---
+@388619 I'm sorry about the delay. We do realize the importance of the order. We've sent the correspondence to your registered email ID. Kindly check it here: https://t.co/8DAc10S7ww and write back to the email. We will reach out to you. ^GK
+---
+@306780 Please don't provide your order details, as we consider it to be personal information. Our Twitter page is public. ^RW
+---
+@683415 I'm sorry for any frustration this has caused. Just to clarify, have you spoken with us about this? https://t.co/JzP7hlRCV9. ^AL",I am sorry for the frustration caused by the lack of resolution for your February order. Please share your details via this secure link: https://t.co/GIJyeYqKE0 so we can investigate the refund status and reach out to you directly.,auto,Auto-handle if standard policy applies. Escalate if customer reports repeated failed replacement or refund amount disputed.,3,3,2,3,11,Uses the retrieved refund-investigation link appropriately; a lost package with a disputed refund arguably meets the escalation trigger but the reply itself is sound and actionable.
+MSG_0002,Hey @115821 I currently have a problem with my package.,ORDER_DELIVERY_STATUS,"@780757 Hey! Sorry to hear that, can you provide some more details without providing any account information? ^CH
+---
+@157750 Oh my! We don't have access to your account via Twitter. Please reach out to us here so we can look into this together: https://t.co/hApLpMlfHN ^MO
+---
+@368029 Amazing... :) :) Better go catch it.. ^NV
+---
+@306109 I'm sorry that your package hasn't arrived! We'd like to look into this further! Contact us here: https://t.co/hApLpMlfHN ^CN
+---
+@753785 I've responded to your DM, please let us know if you'd prefer to address the issue here! ^GR",I'm sorry to hear that your package hasn't arrived! We'd like to look into this further for you. Please reach out to us via our secure support channel here so we can check the tracking status and provide an update: https://t.co/hApLpMlfHN,auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,2,2,3,10,"Reuses the retrieved support-channel link, but assumes the package 'hasn't arrived' when the customer only said there's a vague 'problem', a minor unsupported inference."
+MSG_0023,"Why is it so much to ask for @115821 to deliver my packages when they say they will? 3rd package to be late, might cancel prime. @Amazonhelp",ORDER_DELIVERY_STATUS,"@188695 Oh no! Could you please tell us who the carrier is? You can find out here:  https://t.co/Y5jpI9gRhE ^BA
+---
+@720098 I'm sorry for the poor service! We're happy to review available options as well as document carrier feedback on your behalf here: https://t.co/hApLpMlfHN. ^EZ
+---
+@157498 I'm very sorry for the frustration, Raymond! We'd like to help! Have you noticed a trend in the carrier with the late deliveries? ^HM
+---
+@163618 I'm sorry for the trouble! When this happens, who's the carrier? Please check under tracking info: https://t.co/Y5jpI9gRhE ^MH
+---
+@195710 We always intend to deliver by the promised date. Have we missed our mark on a recent order? Please let us know! ^CS","I'm very sorry for the frustration with these repeated late deliveries! To help us investigate, could you please let us know who the carrier is? You can find this information under the tracking details here: https://t.co/Y5jpI9gRhE",auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,Closely follows the retrieved carrier-identification approach and link; doesn't address the prime-cancellation concern the customer raised.
+MSG_0003,@AmazonHelp no body inform me. once u return that parcel. please send the tracking id or parcel details. but after 10days i call amazon custamare care,ORDER_DELIVERY_STATUS,"@119214 Thank you for sharing your details, Dhinesh. We'll check your concern and reach you soon. ^VG
+---
+@232646 I'm sorry about the conflicting scan codes. Kindly report this to our support team here: https://t.co/vlvfJr4nN9 and we'll assist you accordingly. ^GD
+---
+@262362 Oh no! I'm sorry for the trouble with your delivery. Have you tried the tricks and tips listed here to look for your package: https://t.co/5ne11FgyJC? Let us know! We're here to help. ^TG
+---
+@423333 I'm sorry about the delay! Please give us a call here: https://t.co/JzP7hlA23B so we can look into this with you! ^TR
+---
+@170168 I'd like to assist you with this, please share your details on the link here: https://t.co/GIJyeYqKE0. 2/2 ^PS",I'm sorry for the confusion and the delay in receiving your package details. Please share your order information via this link so we can look into the tracking status for you: https://t.co/GIJyeYqKE0. We'll check the delivery status and reach out with an update soon.,auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,"Grounded in the retrieved details-sharing link and gives a reasonable next step, though it doesn't directly address the 10-day wait already mentioned."
+MSG_0037,@115850 Stop behaving like local shopkeepers Amazon. We had good faith in you. Continuously delivering defective Redmi 4 and now don't want to help and want jobsheet,PRODUCT_COMPLAINT,"@177960 Apologies for the experience. That wasn't intended. Please share your details here: https://t.co/GIJyeYqKE0 and we will have a closer look on this. ^BS
+---
+@158262 We apologize for the delay. Allow our support team to investigate . You can report it here: https://t.co/R3EfhzgU8B ^CB.
+---
+@319635 I'm sorry but we never intended this, please fill this form: https://t.co/beaaDm0muc and we'll get back to you soon. (1/2) ^SI
+---
+@158526 Please don't provide your order details, we consider it personal information. Our page is visible to public. (2/2) ^YP
+---
+@170585 I'm sorry you missed out this time. I could assure you there were no issues with the website. You may try again next week. ^JC","We sincerely apologize for the inconvenience caused by the defective product and the frustration with our support process. Please do not share your order details publicly, as this page is visible to everyone. To resolve this, please fill out the form at https://t.co/beaaDm0muc, and our team will investigate the issue and assist you further.",auto,Auto-handle with standard return/refund offer. Escalate if customer alleges fraud or health/safety risk.,2,1,2,2,7,"Merges two unrelated retrieved snippets (a privacy warning about a different form and a form-fill instruction) into one confusing, self-contradictory message."
+MSG_0008,@AmazonHelp where is Outlander s3 ep6??? Meant to be up this morning on prime?,PRIME_SUBSCRIPTION,"@452035 Hey! We're excited to watch it too! Episode 6 of Outlander hasn't aired yet. You can expect it on Prime Video on the 23rd. ^TK
+---
+@205402 Episodes are typically uploaded within 24 hours of airing. Please let us know if you have any further questions! ^GM
+---
+@213051 I'm sorry, we don't have any information we can provide. Please check back on the video detail page for updates! ^MB
+---
+@793623 Hey Linda! We'd love to help! Can you give us details on what's happening when you try to watch it? Thanks! ^AJ
+---
+@340985 That's unusual!  Just to ensure, is this happening to be only with one episode or all of the episodes of ""Into the Badlands""?^SM",Hey! We're excited to watch it too! Episode 6 of Outlander hasn't aired yet. You can expect it on Prime Video on the 23rd.,auto,Auto-handle: explain cancellation steps or link to membership page. Escalate if customer reports being charged after cancellation.,3,3,3,3,12,"Directly reuses the exact accurate answer from the retrieved reply, giving the customer a clear date."
+MSG_0017,"@115830 If I was in America, I could have lawfully shot the delivery man.",ORDER_DELIVERY_STATUS,"@150758 I'd like a member of our team to take a look into this. Please provide your details here: https://t.co/qFHBfDjwZa ^AN
+---
+@256157 We'd like to help, but we need a bit more information. Can you tell us more about what's happened? Please don't include any account details. ^GS
+---
+@138300 I'm sorry to hear about this experience, Joe! We'd like to look into this with you. Please contact us via phone or chat so we can go over avaiable options:  https://t.co/JzP7hlA23B ^MW
+---
+@470454 Oh my! I'm sorry for this. Packages can be delivered until 9pm. Please let us know if you do not have your order by then. ^AL
+---
+@282867 I'm sorry to hear that your order wasn't delivered. Who is the carrier for this order shown here: https://t.co/q4LAMZ3tbE? ^GR","I'm sorry to hear about the frustration with your delivery. Could you please let us know if you have received your order by now? If it is still missing, please share the carrier name shown in your tracking details so we can look into the status for you.",auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,"Blends the 9pm-delivery check-in and carrier-request refs sensibly, though a message with a violent remark might have merited flagging rather than a purely standard tracking reply."
+MSG_0001,@AmazonHelp Hi I’ve ordered something and don’t know if payment has been taken or not?  Is payment immediate or does it take a while?,CHARGE_PAYMENT_BILLING,"@353711 Hi - we take payment once the item dispatches. You will receive a dispatch confirmation email with all the details ^TD
+---
+@707769 Hey! We don't have access to your Amazon account via Twitter. Has your order been dispatched? You can check here: https://t.co/aaDyEz1VgE. ^CN
+---
+@216354 It would be taken during the dispatch of the order, so can be anything from the day before to that morning of the release day.^CD
+---
+@131415 I am sorry to hear this Lois. Can you please contact us through the following link so we can investigate this for you and we will also look to see can we change the delivery method for you: https://t.co/JzP7hlA23B.^GA
+---
+@494994 Oh no! I'm very sorry for the inconvenience. Have you been give a notice of delay or an updated delivery date? ^ZW","Hi there, I understand the uncertainty can be stressful. Please note that payment is typically taken once your item dispatches, so it may not be immediate at the time of ordering. You can check your order status and any dispatch confirmation emails in your account to see if the payment has been processed.",escalate,Escalate if amount > $50 or customer explicitly disputes the charge. Auto-handle only for informational billing queries.,3,3,3,3,12,Accurately answers a purely informational billing question using the retrieved dispatch-based payment-timing fact; note the escalation decision itself seems mismatched with the stated policy since this is not a disputed charge.
+MSG_0004,@AmazonHelp Every item I’ve ordered in the last 2 weeks. Placed an order today said delivery tomorrow then at payment changes to 4th just one example. Not sure why I’m paying for prime....,ORDER_DELIVERY_STATUS,"@134827 We're always striving to improve our customers' experiences and feedback like yours is appreciated. I know we'd be happy to look into this, as well as pass feedback on to the courier. To reach out to us directly by phone or chat, click here: https://t.co/JzP7hlA23B ^TG
+---
+@133551 We're here to help, sorry for any inconvenience caused! Are we missing the expected delivery date for your orders? Check: https://t.co/aaDyEz1VgE and let us know. We're here to help! ^JE
+---
+@314202 when is the delivery estimate on your order? ^AS
+---
+@383299 I'm sorry for the wait! We'd like to help; what's the name of the carrier assigned to this order here: https://t.co/Y5jpI9gRhE? ^SH
+---
+@742152 Hello Michelle! Thanks for reaching out today. Did we miss the agreed upon date given at the time of checkout for the item ordered? For full details on how shipping &amp; delivery dates are calculated please see here: https://t.co/qUShXTx8j0 ^TM","We're sorry for the confusion regarding your delivery dates! Please check your order status and expected delivery windows here: https://t.co/aaDyEz1VgE. If the dates are still incorrect or you need further assistance, let us know the specific order details so we can investigate the shipping calculation for you.",auto,Auto-handle: standard tracking lookup + ETA update. Escalate if >7 days past expected delivery with no resolution.,3,3,2,3,11,"Reuses the retrieved order-status link appropriately, but doesn't address the customer's underlying concern about the value of their Prime subscription."

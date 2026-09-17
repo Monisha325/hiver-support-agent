@@ -1,0 +1,24 @@
+============================================================
+PHASE 2 — RETRIEVAL INDEX BUILD LOG
+============================================================
+Source:           twcs.csv (Kaggle Customer Support on Twitter)
+Brand:            AmazonHelp
+Total CSV rows:   2,811,774
+Brand replies:    169,840
+Matched pairs:    152,030
+Indexed corpus:   40,000
+Embedding model:  all-MiniLM-L6-v2
+Embedding dim:    384
+FAISS index type: IndexFlatIP (exact cosine)
+Build time:       351.7s
+
+Intent distribution:
+  UNCLASSIFIED                        17,504  (43.8%)
+  ORDER_DELIVERY_STATUS               13,156  (32.9%)
+  DEVICE_APP_TECHNICAL                 2,525  (6.3%)
+  RETURN_REFUND_REPLACEMENT            1,749  (4.4%)
+  PRIME_SUBSCRIPTION                   1,392  (3.5%)
+  CHARGE_PAYMENT_BILLING               1,261  (3.2%)
+  ACCOUNT_ACCESS                       1,124  (2.8%)
+  PRODUCT_COMPLAINT                      914  (2.3%)
+  ORDER_CANCELLATION                     375  (0.9%)

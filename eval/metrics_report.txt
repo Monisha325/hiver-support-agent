@@ -1,0 +1,45 @@
+=================================================================
+EVALUATION METRICS REPORT
+Source: golden_set.csv (from twcs.csv only)
+=================================================================
+
+[INTENT CLASSIFICATION]
+  Accuracy:           0.474
+  Macro F1:           0.466
+  Weighted F1:        0.477
+
+  Per-class F1:
+    ACCOUNT_ACCESS                      F1=0.667
+    PRIME_SUBSCRIPTION                  F1=0.667
+    CHARGE_PAYMENT_BILLING              F1=0.500
+    ORDER_DELIVERY_STATUS               F1=0.500
+    DEVICE_APP_TECHNICAL                F1=0.444
+    PRODUCT_COMPLAINT                   F1=0.364
+    ORDER_CANCELLATION                  F1=0.333
+    RETURN_REFUND_REPLACEMENT           F1=0.250
+
+  Worst 3 intents by F1:
+    RETURN_REFUND_REPLACEMENT           F1=0.250
+    ORDER_CANCELLATION                  F1=0.333
+    PRODUCT_COMPLAINT                   F1=0.364
+
+[ESCALATION (escalate = positive class)]
+  Precision:          0.667
+  Recall:             0.533
+  F1:                 0.593
+  TP=8  FP=4  FN=7  TN=24
+  FALSE-AUTO-HANDLE (missed escalations):  7  ← HIGH RISK
+  FALSE-ESCALATE (unnecessary routing):    4
+
+  False-auto examples (gold=escalate, pred=auto):
+    [MSG_0022] @AmazonHelp Things have been going good except for this order placed in Feb, 17 
+    [MSG_0034] @AmazonHelp I'VE SPOKE TO THREE DIFFERENT PEOPLE ABOUT MY REFUND AND IT IS STILL
+    [MSG_0043] @AmazonHelp I’ve been randomly charged £7.99 for Prime but I’m not a member, I’v
+
+[REPLY GROUNDEDNESS]
+  Mean ROUGE-1 recall vs retrieved passages: 0.596
+  (1.0 = every draft word is in a retrieved AmazonHelp reply)
+  (0.0 = draft shares no words with retrievals)
+  N scored: 43
+
+NOTE: Groundedness proxy only. See llm_judge.py for rubric-based quality.
